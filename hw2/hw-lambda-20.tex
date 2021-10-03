@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage,times,color}%charter}
+\definecolor{timberwolf}{rgb}{0.86, 0.84, 0.82}
+
+\definecolor{armygreen}{rgb}{0.00, 0.5, 0.0}
+\usepackage{xcolor}
+\usepackage[disable]{todonotes}
+%\usepackage[draft]{todonotes}
+
+\newcommand{\comment}[1]{}
+%\newcommand{\comment}[1]{\par {\bfseries \color{blue} #1 \par}} 
+%\renewcommand{\comment}[1]{\par {\color{blue} #1} \par}
+\newcommand{\betar}[1]{\stackrel{\beta-\mbox{\small reduce on}\ #1}{\longrightarrow}}
+\newcommand{\alphar}{\stackrel{\beta-\mbox{\small rename}}{\longrightarrow}}
+
+
+\newcommand{\lmda}[2]{\lambda #1.#2}
+\newcommand{\lmd}[3]{(\lmda{#1}{#2}\ #3)}
+\newcommand{\appl}[2]{(#1\ \ #2)}
+
+
+\begin{document}
+
+\begin{center}
+{\Large\bf Homework: Lambda Calculus}
+
+\medskip
+
+{Due-date: Feb 13 at 11:59pm.}
+\\
+Submit online on Canvas (\textbf{\color{red} Format: pdf}).
+\end{center}
+
+\hrule
+
+\textit{
+\noindent
+\\ Homework must be individual's original work. Collaborations and
+discussions of any form with any students or other faculty members are
+not allowed. If you have any questions and/or concerns, post them on
+Piazza and/or ask 342 instructor and TAs.\\ 
+} \hrule
+\medskip
+
+
+\noindent
+\colorbox{timberwolf}{Learning Outcomes}
+\begin{itemize}
+\item Application of knowledge of computing and mathematics
+\item Ability to understand the implications of mathematical formalisms
+      in computer science
+\end{itemize}
+
+\medskip
+
+\noindent
+\colorbox{timberwolf}{Questions}
+\begin{enumerate}
+\item Compute the following (apply reductions till the
+expression cannot be reduced any further)
+\begin{enumerate}
+
+\item 
+$\appl{\appl{\lmda{x}{\appl{x}{x}}}{\lmda{y}{y}}}{\lmda{y}{y}}$
+
+\item 
+$\appl{\appl{\lmda{x}{\lmda{y}{\appl{x}{\appl{y}{y}}}}}{\lmda{a}{a}}}{b}$
+
+\item 
+$\appl{\appl{\lmda{x}{\appl{x}{x}}}{\lmda{y}{\appl{y}{x}}}}{z}$
+
+\item
+$\appl{\lmda{g}{\appl{g}{\lmda{x}{\lmda{y}{x}}}}}{\appl{\appl{\lmda{a}{\lmda{b}{\lmda{h}{\appl{\appl{h}{a}}{b}}}}}{z_1}}{z_2}}$
+
+\item
+$\appl{\appl{\lmda{t}{\lmda{y}{\appl{t}{y}}}}{\lmda{n}{\lmda{f}{\lmda{x}{\appl{f}{\appl{\appl{n}{f}}{x}}}}}}}{\lmda{g}{\lmda{z}{\appl{g}{\appl{g}{z}}}}}$
+
+\end{enumerate}
+\hfill (15pts)
+
+\item 
+Given the following lambda expressions and corresponding
+interpretations:
+\begin{itemize}
+\item The interpretation of $\lmda{f}{\lmda{x}{x}}$ is natural number
+  $0$ (zero). The interpretation of
+  $\lambda{f}{\lmda{x}{\appl{f}{\appl{f}{\appl{...}{x}}}}}$, with $n$
+  applications of $f$ on $x$, is the natural number $n>0$.
+\item The interpretation of
+  $\lmda{n}{\lmda{f}{\lmda{x}{\appl{f}{\appl{\appl{n}{f}}{x}}}}}$ is a
+  successor function $succ$ for natural numbers, where $n$ is the
+  formal parameter corresponding to the number whose successor is
+  computed.
+\item The interpretation of
+  $\lmda{m}{\lmda{n}{\appl{\appl{m}{succ}}{n}}}$
+  is the addition function $add$ for two natural numbers, where $m$
+  and $n$ are the formal parameters corresponding to the numbers whose
+  sum is computed.
+\item The interpretation of 
+ $\lmda{m}{\lmda{n}{\appl{\appl{m}{\appl{add}{n}}}{zero}}}$
+is the multiplication function $mul$ for two natural numbers, where $m$
+  and $n$ are the formal parameters corresponding to the numbers whose
+  product is computed.
+\item The interpretation of $\lmda{x}{\lmda{y}{x}}$ is propositional constant $true$.
+\item The interpretation of $\lmda{x}{\lmda{y}{y}}$ is propositional constant $false$.
+
+\item The interpretation of
+  $\lmda{a}{\lmda{b}{\lmda{h}{\appl{\appl{h}{a}}{b}}}}$ is
+  a \emph{pair} of entities $a$ and $b$ on which some function $h$ can
+  be applied. We will refer to this function as $Pair$. The first or
+  second element of the pair $\appl{\appl{Pair}{z_1}}{z_2}$ can be
+  obtained by applying on it the functions
+  $\lmda{g}{\appl{g}{\lmda{a}{\lmda{b}{a}}}}$ (referred to as $fst$)
+  and $\lmda{g}{\appl{g}{\lmda{a}{\lmda{b}{b}}}}$ (referred to as
+  $sec$), respectively. That is.
+  $\appl{fst}{\appl{\appl{Pair}{z_1}}{z_2}} = z_1$ and
+  $\appl{sec}{\appl{\appl{Pair}{z_1}}{z_2}} = z_2$.
+%
+\item The interpretation of a pair $\appl{\appl{Pair}{m}}{n}$ where
+  $m$ and $n$ are natural numbers is a signed number whose valuation
+  is difference between $m$ and $n$ (i.e., $m-n$). For instance,\linebreak
+  $\appl{\appl{Pair}{\lmda{f}{\lmda{x}{x}}}}{\lmda{f}{\lmda{x}{\appl{f}{x}}}}$
+  represents a signed number $-1$.
+
+\end{itemize}
+Identify the mathematical/logical interpretation for the following
+expressions. Justify your answer. (In all these problems, apply the
+functions on some actual arguments and examine the results; does the
+result correspond to some interpretation that you already know
+about---basic arithmetic or logical operations. We have done similar
+problems, when we identified the interpretation of functions
+representing addition and multiplication of naturals, and negation,
+conjunction and disjuction of propositions.).
+%
+\begin{enumerate}
+\item 
+$\lmda{x}{\appl{\appl{x}{false}}{true}}$, where $x$ is the formal
+parameter corresponding to \textbf{propositional constants}.
+
+\item 
+$\lmda{n}{\appl{\appl{n}{\lmda{p}{\appl{\appl{p}{false}}{true}}}}{false}}$,
+where $n$ is the formal parameter corresponding to \textbf{natural
+  numbers}. 
+
+\item 
+$\lmda{m}{\lmda{n}{\appl{\appl{m}{\appl{mul}{n}}}{\appl{succ}{zero}}}}$,
+  where $m$ and $n$ are formal parameters corresponding to \textbf{natural
+  numbers}.
+
+\item $\lmda{p}{\appl{\appl{Pair}{\appl{sec}{p}}}{\appl{fst}{p}}}$,
+where $p$ is the formal parameter correspond to some \textbf{signed number}.
+
+\item 
+$\lmda{p_1}{\lmda{p_2}{\appl{\appl{Pair}{\appl{\appl{add}{\appl{fst}{p_1}}}{\appl{sec}{p_2}}}}{\appl
+{\appl{add}{\appl{sec}{p_1}}}{\appl{fst}{p_2}}}}}$, where $p_1$ and
+$p_2$ are formal paratemeters corresponding to some \textbf{signed
+numbers}.
+
+\end{enumerate}
+\hfill(25pts)
+
+\end{enumerate}
+
+\hrule
+
+\smallskip
+\noindent
+\emph{Notes: For any lambda expression, whenever you see an application
+of the form $\appl{e_1}{e_2}$, where $e_1$ is a lambda abstraction and
+$e_2$ is a ``large'' expression, use some variable (e.g., $\varphi$)
+to represent the large expression. Perform the $\beta$-reduction in
+the application then expand the expression $e_2$, if necessary.
+Carefully consider the``($\ldots$)''-matching.}
+
+\begin{center}
+\textbf{Due date: Feb 13 at 11:59pm.}
+\end{center}
+\smallskip
+
+\hrule
+
+\end{document}
